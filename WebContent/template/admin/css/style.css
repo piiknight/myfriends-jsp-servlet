@@ -1,0 +1,99 @@
+body {
+	font-family: Dancing Script;
+}
+.card-add {
+	width: 20%;
+	background-color: white;
+	padding: 5px;
+	float: left;
+	margin-left: 20px;
+}
+.card-add a {
+}
+.card-add a img {
+	width: 85%;
+	height:  auto;
+	display: block;
+	margin: 0px auto;
+}
+.card-add a p {
+	text-align: center;
+	margin-top: 5px;
+}
+.introduce {
+	width: 50%;
+	background-color: white;
+	float: right;
+	border-radius: 15px;
+	padding-bottom: 15px;
+}
+.introduce-title {
+	background-color: #EB5E28;
+	border-radius: 10px 10px 0px 0px;
+}
+.introduce-title p {
+	text-align: center;
+	line-height:  50px;
+	font-size: 25px;
+	color: white;
+}
+.introduce-content {
+	padding: 20px 35px;
+	height: 160px;
+}
+.introduce-content p {
+	font-size: 20px;
+}
+.add-item {
+	float: left;
+    margin: 20px;
+}
+.add-item span {
+	font-size: 20px;
+}
+.frame-content {
+	padding: 25px;
+}
+.my-input {
+	border-radius: 5px;
+    display: block;
+    margin-bottom: 15px;
+    height: 35px;
+    width: 40%;
+}
+.my-form .error {
+	color: red;
+}
+.my-form label {
+	display: block;
+}
+h3.title-w3-agile {
+    color: #000;
+    font-size: 3em;
+    letter-spacing: 1px;
+    text-align: left;
+    position: relative;
+    margin-bottom: 1em;
+}
+h3.title-w3-agile:before {
+    content: "";
+    width: 70px;
+    height: 2px;
+    display: block;
+    background: #000;
+    position: absolute;
+    left: 20px;
+    bottom: -9px;
+}
+h3.title-w3-agile:after {
+    content: "";
+    width: 120px;
+    height: 2px;
+    display: block;
+    background: #ff6b6b;
+    position: absolute;
+    top: 56px;
+}
+.my_pagination {
+	text-align: center;
+}
