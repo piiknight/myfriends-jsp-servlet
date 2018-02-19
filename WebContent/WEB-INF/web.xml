@@ -84,4 +84,20 @@
 		<servlet-name>AdminDelUserController</servlet-name>
 		<url-pattern>/admin/users/del</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>AdminIndexFriendsController</servlet-name>
+		<servlet-class>controller.AdminIndexFriendsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminIndexFriendsController</servlet-name>
+		<url-pattern>/admin/friends</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AdminAddFriendsController</servlet-name>
+		<servlet-class>controller.AdminAddFriendsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminAddFriendsController</servlet-name>
+		<url-pattern>/admin/friends/add</url-pattern>
+	</servlet-mapping>
 </web-app>
