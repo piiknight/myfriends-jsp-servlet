@@ -19,11 +19,12 @@
                             <%
                             	String err = request.getParameter("err");
                             	if ("1".equals(err)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Username đã tồn tại, hãy nhập username khác.</div>");
+                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Thêm bạn bè bị lỗi</div>");
                             	}
                             	String name = request.getParameter("username");
-                            	String preview = request.getParameter("fullname");
+                            	String preview = request.getParameter("preview");
                             	String detail = request.getParameter("detail");
+                            	String catId = request.getParameter("username");
                             	if (name == null){
                             		name = "";
                             	}
@@ -33,48 +34,68 @@
                             	if (detail == null){
                             		detail = "";
                             	}
+                            	if (catId == null){
+                            		catId = "";
+                            	}
                             %>
                             <div class="frame-content">
-                            	<form id="form-add" class="my-form" method="post">
+                            	<form id="form-add" class="my-form" action="" method="post" enctype="multipart/form-data">
 	                            	<label>Name: </label>
 	                            	<input type="text" name="name" value="<%=name %>" class="my-input"/>
+	                            	<label>Danh mục tin</label>
+	                            	<%
+	                            		ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
+	                            	%>
+									<select  name="category" class="input-short">
+										<% 
+											for (Category category : categories) {
+										%>
+										<option value="<%=category.getFl_id() %>" <%if (catId.equals(String.valueOf(category.getFl_id()))) out.print("selected"); %>><%=category.getFl_name() %></option>
+										<%
+											}
+										%>
+									</select>
+									
 	                            	<label>Picture: </label>
 	                            	<input type="file" name="picture" value="" class="btn btn-primary">
 	                            	<br />
 	                            	<label>Preview: </label>
-	                            	<input type="text" name="preview" value="<%=preview %>" class="my-input"/>
+	                            	<textarea name="preview" rows="7" cols="90" value="<%=preview %>" class="my-input"><%=preview %></textarea>
 	                            	<label>Detail: </label>
-	                            	<input type="text" name="detail" value="<%=detail %>" class="my-input"/>
+	                            	<textarea  name="detail" rows="7" cols="90" value="<%=detail %>" class="my-input" id="editor"><%=detail %></textarea>
+	                            	<br />
 	                            	<input type="submit" name="them" value="Thêm" class="btn btn-primary">
 	                            	<input type="reset" name="reset" value="Nhập lại" class="btn btn-primary">
 	                            </form>
 	                            
 	                            <script type="text/javascript">
+		                            var editor = CKEDITOR.replace('editor');
+		            				CKFinder.setupCKEditor(editor, '<%=request.getContextPath() %>/template/admin/js/ckfinder');
 									$(document).ready(function (){
 										$("#form-add").validate({
 											rules:{
-												username:{
+												name:{
 													required: true,
 												},
-												password:{
+												preview:{
 													required: true,
 												},
-												fullname:{
+												detail:{
 													required: true,
 												},
 											},
 											messages:{
-												username:{
+												name:{
 													required: "Username không được để trống",
 												},
-												password:{
-													required: "Password không được để trống",
+												preview:{
+													required: "Preview không được để trống",
 												},
-												fullname:{
-													required: "Fullname không được để trống",
+												detail:{
+													required: "Detail không được để trống",
 												},
-											}
-											
+											},
+											ignore: []
 										});			
 									});
 								</script>

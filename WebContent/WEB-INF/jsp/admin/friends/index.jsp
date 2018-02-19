@@ -29,23 +29,13 @@
                             	String err = request.getParameter("err");
                             	String error = request.getParameter("error");
                             	if ("1".equals(msg)){
-                            		out.print("<div class='alert alert-success'><strong>Thành công!</strong> 1 người dùng đã được thêm.</div>");
-                            	} else if ("2".equals(msg)){
-                            		out.print("<div class='alert alert-success'><strong>Thành công!</strong> 1 người dùng đã được sửa.</div>");
-                            	} else if ("3".equals(msg)){
-                            		out.print("<div class='alert alert-success'><strong>Thành công!</strong> 1 người dùng đã được xóa.</div>");
+                            		out.print("<div class='alert alert-success'><strong>Thành công!</strong> 1 bạn bè đã được thêm.</div>");
                             	}
                             	if ("1".equals(err)){
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Thêm người dùng không được thực hiện.</div>");
-                            	} else if ("2".equals(err)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Sửa người dùng không được thực hiện.</div>");
-                            	} else if ("3".equals(err)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Xóa người dùng không được thực hiện.</div>");
-                            	}
+                            	} 
                             	if ("1".equals(error)){
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không tìm thấy ID.</div>");
-                            	} else if ("2".equals(error)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không thể xóa Admin.</div>");
                             	}
                             	
                             %>

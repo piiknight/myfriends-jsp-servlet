@@ -36,7 +36,8 @@
     <link href="<%=request.getContextPath() %>/template/admin/css/themify-icons.css" rel="stylesheet">
     <script type="text/javascript" src="<%=request.getContextPath() %>/template/admin/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/template/admin/js/jquery.validate.min.js"></script>
-	
+	<script type="text/javascript" src="<%=request.getContextPath() %>/template/admin/js/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/template/admin/js/ckfinder/ckfinder.js"></script>
 
 </head>
 <body>

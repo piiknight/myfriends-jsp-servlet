@@ -179,7 +179,7 @@ public class FriendDAO {
 	public ArrayList<Friend> getItems() {
 		ArrayList<Friend> items = new ArrayList<>();
 		String sql = "SELECT fid, fname, preview, detail, date_create, count_number, picture, friend_list.fl_id, fl_name" + 
-				" FROM friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id";
+				" FROM friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id ORDER BY fid DESC";
 		
 		try {
 			// Tạo đường đi đến DB
@@ -223,6 +223,43 @@ public class FriendDAO {
 		}
 		
 		return items;
+	}
+
+	public int addItem(Friend friend) {
+		int row = 0;
+		String sql = "INSERT INTO friends(fname, preview, detail, date_create, fl_id, count_number, picture)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
+		
+		try {
+			conn = DatabaseConnection.getConnection();
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, friend.getFname());
+			pst.setString(2, friend.getPreview());
+			pst.setString(3, friend.getDetail());
+			pst.setTimestamp(4, friend.getDate_create());
+			pst.setInt(5, friend.getCategory().getFl_id());
+			pst.setInt(6, friend.getCount_number());
+			pst.setString(7, friend.getPicture());
+			
+			row = pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null && pst !=null && conn !=null) {
+				try {
+					rs.close();
+					pst.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return row;
 	}
 	
 }

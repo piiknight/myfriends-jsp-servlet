@@ -1015,14 +1015,15 @@ textarea.form-control {
 .table-striped > tfoot > tr > td {
   padding: 15px 8px;
   font-size: 20px; }
-.table-striped > tbody > tr > td > img {
+.background-img-table img {
 	width: 150px;
     height: 120px;
-    padding: 10px;
+    border-radius: 9px;
+    margin: 3px 0px 0px 3px;
 }
 .table-striped > tbody > tr > td > .background-img-table {
-	width: 170px;
-    height: 140px;
+	width: 160px;
+    height: 130px;
     border-radius: 9px;
     border: 2px solid #EB5E28;
 }
