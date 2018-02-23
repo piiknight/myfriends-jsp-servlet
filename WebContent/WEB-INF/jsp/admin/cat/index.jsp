@@ -29,6 +29,7 @@
                             <%
                             	String msg = request.getParameter("msg");
                             	String err = request.getParameter("err");
+                            	String error = request.getParameter("error");
                             	if ("1".equals(msg)){
                             		out.print("<div class='alert alert-success'><strong>Thành công!</strong> 1 danh mục bạn bè đã được thêm.</div>");
                             	} else if ("2".equals(msg)){
@@ -44,6 +45,9 @@
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Sửa danh mục không được thực hiện.</div>");
                             	} else if ("4".equals(err)){
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Xóa danh mục không được thực hiện.</div>");
+                            	}
+                            	if ("1".equals(error)){
+                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không tìm thấy trang.</div>");
                             	}
                             	
                             %>
@@ -70,7 +74,7 @@
 							                        <i class="ti-pencil"></i>
 							                        <span>Sửa</span>
 							                    </a>
-							                    <a href="<%=request.getContextPath() %>/admin/cats/del?id=<%=category.getFl_id() %>">
+							                    <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="<%=request.getContextPath() %>/admin/cats/del?id=<%=category.getFl_id() %>">
 							                        <i class="ti-trash"></i>
 							                        <span>Xóa</span>
 							                    </a>
@@ -81,7 +85,43 @@
                                         %>
                                     </tbody>
                                 </table>
-
+								<div class="my_pagination pagination">
+								<span>PAGE</span>
+								<%
+									int sumPage = (int) request.getAttribute("sumPage");
+									int currentPage = (int) request.getAttribute("currentPage");
+								%>
+							 		<a id="backlistpage" href="javascript:;">&laquo;</a>
+							 		<%
+							 			if (currentPage != 1) {
+							 		%>
+							 		<a href="<%=request.getContextPath() %>/admin/cats?page=<%=currentPage - 1 %>">&lsaquo;</a>
+							 		<%
+							 			}
+							 		%>
+									<%
+										
+										String active = "";
+										for (int i = 1; i <= sumPage; i++){
+											if (i == currentPage) {
+												active = "class='active'";
+											} else {
+												active = "";
+											}
+									%>
+										<a id="idpage<%=i %>" <%=active %> href="<%=request.getContextPath() %>/admin/cats?page=<%=i %>"><%=i %></a>
+									<%
+										}
+									%>
+									<%
+							 			if (currentPage != sumPage) {
+							 		%>
+							 		<a href="<%=request.getContextPath() %>/admin/cats?page=<%=currentPage + 1 %>">&rsaquo;</a>
+							 		<%
+							 			}
+							 		%>
+									<a id="nextlistpage" href="javascript:;">&raquo;</a>
+								</div>
                             </div>
                         </div>
                     </div>

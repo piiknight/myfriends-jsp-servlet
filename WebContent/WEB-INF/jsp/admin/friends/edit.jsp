@@ -1,3 +1,4 @@
+<%@page import="model.bean.Friend"%>
 <%@page import="model.bean.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -19,42 +20,25 @@
                             <%
                             	String err = request.getParameter("err");
                             	if ("1".equals(err)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Thêm bạn bè bị lỗi</div>");
+                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Sửa bạn bè bị lỗi</div>");
                             	} else if ("2".equals(err)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Hãy nhập file!</div>");
-                            	} else if ("3".equals(err)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Hãy nhập file ảnh !</div>");
-                            	} 
-                            	String name = request.getParameter("username");
-                            	String preview = request.getParameter("preview");
-                            	String detail = request.getParameter("detail");
-                            	String catId = request.getParameter("username");
-                            	if (name == null){
-                            		name = "";
+                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Hãy nhập file ảnh!</div>");
                             	}
-                            	if (preview == null){
-                            		preview = "";
-                            	}
-                            	if (detail == null){
-                            		detail = "";
-                            	}
-                            	if (catId == null){
-                            		catId = "";
-                            	}
+                            	Friend friend = (Friend) request.getAttribute("friend");
                             %>
                             <div class="frame-content">
                             	<form id="form-add" class="my-form" action="" method="post" enctype="multipart/form-data">
 	                            	<label>Name: </label>
-	                            	<input type="text" name="name" value="<%=name %>" class="my-input"/>
+	                            	<input type="text" name="name" value="<%=friend.getFname() %>" class="my-input" />
 	                            	<label>Danh mục tin</label>
 	                            	<%
 	                            		ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
 	                            	%>
-									<select  name="category" class="input-short">
+									<select name="category" class="input-short">
 										<% 
 											for (Category category : categories) {
 										%>
-										<option value="<%=category.getFl_id() %>" <%if (catId.equals(String.valueOf(category.getFl_id()))) out.print("selected"); %>><%=category.getFl_name() %></option>
+										<option value="<%=category.getFl_id() %>" <%if (category.getFl_id() == friend.getCategory().getFl_id()) out.print("selected"); %>><%=category.getFl_name() %></option>
 										<%
 											}
 										%>
@@ -64,9 +48,9 @@
 	                            	<input type="file" name="picture" value="" class="btn btn-primary">
 	                            	<br />
 	                            	<label>Preview: </label>
-	                            	<textarea name="preview" rows="7" cols="90" value="<%=preview %>" class="my-input"><%=preview %></textarea>
+	                            	<textarea name="preview" rows="7" cols="90" class="my-input"><%=friend.getPreview() %></textarea>
 	                            	<label>Detail: </label>
-	                            	<textarea  name="detail" rows="7" cols="90" value="<%=detail %>" class="my-input" id="editor"><%=detail %></textarea>
+	                            	<textarea  name="detail" rows="7" cols="90" class="my-input" id="editor"><%=friend.getDetail() %></textarea>
 	                            	<br />
 	                            	<input type="submit" name="them" value="Thêm" class="btn btn-primary">
 	                            	<input type="reset" name="reset" value="Nhập lại" class="btn btn-primary">

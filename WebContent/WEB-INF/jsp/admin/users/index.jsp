@@ -46,7 +46,9 @@
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không tìm thấy ID.</div>");
                             	} else if ("2".equals(error)){
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không thể xóa Admin.</div>");
-                            	}
+                            	} else if ("3".equals(error)){
+                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không tìm thấy trang.</div>");
+                            	} 
                             	
                             %>
                             
@@ -74,7 +76,7 @@
 							                        <i class="ti-pencil"></i>
 							                        <span>Sửa</span>
 							                    </a>
-							                    <a href="<%=request.getContextPath() %>/admin/users/del?id=<%=user.getId() %>">
+							                    <a onclick="return confirm('Bạn có chắc muốn xóa ?')" href="<%=request.getContextPath() %>/admin/users/del?id=<%=user.getId() %>">
 							                        <i class="ti-trash"></i>
 							                        <span>Xóa</span>
 							                    </a>
@@ -85,10 +87,42 @@
                                         %>
                                     </tbody>
                                 </table>
-								<div class="my_pagination">
-									<span>Trang:</span>
-									<span>1</span>
-									<span>2</span>
+								<div class="my_pagination pagination">
+								<span>PAGE</span>
+								<%
+									int sumPage = (int) request.getAttribute("sumPage");
+									int currentPage = (int) request.getAttribute("currentPage");
+								%>
+							 		<a id="backlistpage" href="javascript:;">&laquo;</a>
+							 		<%
+							 			if (currentPage != 1) {
+							 		%>
+							 		<a href="<%=request.getContextPath() %>/admin/users?page=<%=currentPage - 1 %>">&lsaquo;</a>
+							 		<%
+							 			}
+							 		%>
+									<%
+										
+										String active = "";
+										for (int i = 1; i <= sumPage; i++){
+											if (i == currentPage) {
+												active = "class='active'";
+											} else {
+												active = "";
+											}
+									%>
+										<a id="idpage<%=i %>" <%=active %> href="<%=request.getContextPath() %>/admin/users?page=<%=i %>"><%=i %></a>
+									<%
+										}
+									%>
+									<%
+							 			if (currentPage != sumPage) {
+							 		%>
+							 		<a href="<%=request.getContextPath() %>/admin/users?page=<%=currentPage + 1 %>">&rsaquo;</a>
+							 		<%
+							 			}
+							 		%>
+									<a id="nextlistpage" href="javascript:;">&raquo;</a>
 								</div>
                             </div>
                         </div>
