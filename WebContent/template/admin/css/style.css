@@ -7,6 +7,10 @@ body {
 	padding: 5px;
 	float: left;
 	margin-left: 20px;
+	transition: transform 1.5s;
+}
+.card-add:hover {
+	transform: rotateY(360deg);
 }
 .card-add a {
 }
@@ -95,5 +99,26 @@ h3.title-w3-agile:after {
     top: 56px;
 }
 .my_pagination {
-	text-align: center;
+    font-family: normal;
+    border: 1px solid;
+    float: right;
 }
+.my_pagination span {
+    font-family:  Dancing Script;
+    float: left;
+    padding: 8px 16px;
+    margin-top: 5px;
+}
+.my_pagination a {
+    color: black;
+    padding: 8px 16px;
+    float: left;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+.my_pagination a.active {
+    background-color: #EB5E28;
+    color: white;
+}
+
+.my_pagination a:hover:not(.active) {background-color: #ddd;}
