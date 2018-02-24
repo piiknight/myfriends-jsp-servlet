@@ -21,7 +21,6 @@ import model.dao.FriendDAO;
 public class AdminAddFriendsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CategoryDAO categoryDAO;
-	
 	private FriendDAO friendDAO;
        
     public AdminAddFriendsController() {
@@ -97,7 +96,7 @@ public class AdminAddFriendsController extends HttpServlet {
 				}
 				request.setAttribute("categories", categories);
 				
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/add.jsp?err=3");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/add.jsp?err=1");
 				rd.forward(request, response);
 				return;
 			}
@@ -109,14 +108,14 @@ public class AdminAddFriendsController extends HttpServlet {
 			}
 			request.setAttribute("categories", categories);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/add.jsp?err=2");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/add.jsp?err=1");
 			rd.forward(request, response);
 			return;
 		}
 		
 		//
 		
-		Friend friend = new Friend(0, name, preview, detail, null, 0, fileName, new Category(catId, null));
+		Friend friend = new Friend(0, name, preview, detail, null, 10, fileName, new Category(catId, null));
 		if (friendDAO.addItem(friend) > 0) {
 			part.write(filePath);
 			response.sendRedirect(request.getContextPath() + "/admin/friends?msg=1");

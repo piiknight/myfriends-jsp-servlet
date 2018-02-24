@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import constant.Define;
 import model.bean.Category;
 import model.bean.Friend;
 import util.DatabaseConnection;
@@ -249,144 +248,7 @@ public class FriendDAO {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		} finally {
-			if(pst !=null && conn !=null) {
-				try {
-					pst.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return row;
-	}
-
-	public int editItem(Friend friend) {
-		int row = 0;
-		String sql = "UPDATE friends SET fname = ?, preview = ?, detail = ?, picture = ?, fl_id = ? WHERE fid = ?";
-		
-		try {
-			conn = DatabaseConnection.getConnection();
-			pst = conn.prepareStatement(sql);
-			pst.setString(1, friend.getFname());
-			pst.setString(2, friend.getPreview());
-			pst.setString(3, friend.getDetail());
-			pst.setString(4, friend.getPicture());
-			pst.setInt(5, friend.getCategory().getFl_id());
-			pst.setInt(6, friend.getFid());
-			
-			row = pst.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-		finally {
-			if (conn != null && pst != null) {
-				try {
-					pst.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return row;
-	}
-
-	public int delItem(Friend friend) {
-		int row = 0;
-		String sql = "DELETE FROM friends WHERE fid = ?";
-		
-		try {
-			conn = DatabaseConnection.getConnection();
-			pst = conn.prepareStatement(sql);
-			pst.setInt(1, friend.getFid());
-			
-			row = pst.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} finally {
-			if(pst !=null && conn !=null) {
-				try {
-					pst.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return row;
-	}
-
-	public int countFriend() {
-		int result = 0;
-		String sql = "SELECT COUNT(*) AS sumFriend FROM "
-				+ "friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id ";
-	
-		try {
-			conn = DatabaseConnection.getConnection();
-			st = conn.createStatement();
-			rs = st.executeQuery(sql);
-			if (rs.next()) {
-				result = rs.getInt("sumFriend");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} finally {
-			if (conn != null && st != null && rs != null) {
-				try {
-					rs.close();
-					st.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		}
-		return result;
-	}
-
-	public ArrayList<Friend> getItemsPagination(int offset) {
-		ArrayList<Friend> friends = new ArrayList<>();;
-		String sql = "SELECT fid, fname, preview, detail, date_create, count_number, picture, friend_list.fl_id AS cat_id, fl_name FROM "
-				+ "friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id"
-				+ " ORDER BY fid DESC LIMIT ?, ?";
-		try {
-			conn = DatabaseConnection.getConnection();
-			pst = conn.prepareStatement(sql);
-			pst.setInt(1, offset);
-			pst.setInt(2, Define.ROW_PAGINATION_FRIEND);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				int fid = rs.getInt("fid");
-				String fname = rs.getString("fname");
-				String preview = rs.getString("preview");
-				String detail = rs.getString("detail");
-				String picture = rs.getString("picture");
-				Timestamp date_create = rs.getTimestamp("date_create");
-				int count_number = rs.getInt("count_number");
-				String fl_name = rs.getString("fl_name");
-				int fl_id = rs.getInt("cat_id");
-				Category category = new Category(fl_id, fl_name);
-				Friend friend = new Friend(fid, fname, preview, detail, date_create, count_number, picture, category);
-				friends.add(friend);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} finally {
-			if (conn != null && pst != null && rs != null) {
+			if(rs != null && pst !=null && conn !=null) {
 				try {
 					rs.close();
 					pst.close();
@@ -394,10 +256,10 @@ public class FriendDAO {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
 			}
 		}
-		return friends;
+		
+		return row;
 	}
 	
 }

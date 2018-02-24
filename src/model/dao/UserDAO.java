@@ -5,12 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import constant.Define;
 import model.bean.Category;
-import model.bean.Friend;
 import model.bean.User;
 import util.DatabaseConnection;
 
@@ -192,71 +189,4 @@ public class UserDAO {
 
 		return row;
 	}
-	
-	public int countUser() {
-		int result = 0;
-		String sql = "SELECT COUNT(*) AS sumUser FROM users";
-	
-		try {
-			conn = DatabaseConnection.getConnection();
-			st = conn.createStatement();
-			rs = st.executeQuery(sql);
-			if (rs.next()) {
-				result = rs.getInt("sumUser");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} finally {
-			if (conn != null && st != null && rs != null) {
-				try {
-					rs.close();
-					st.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		}
-		return result;
-	}
-
-	public ArrayList<User> getItemsPagination(int offset) {
-		ArrayList<User> users = new ArrayList<>();;
-		String sql = "SELECT id, username, fullname FROM users"
-				+ " ORDER BY id DESC LIMIT ?, ?";
-		try {
-			conn = DatabaseConnection.getConnection();
-			pst = conn.prepareStatement(sql);
-			pst.setInt(1, offset);
-			pst.setInt(2, Define.ROW_PAGINATION_USER);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String fullname = rs.getString("fullname");
-				User user = new User(id, username, fullname);
-				users.add(user);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} finally {
-			if (conn != null && pst != null && rs != null) {
-				try {
-					rs.close();
-					pst.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		}
-		return users;
-	}
 }
-

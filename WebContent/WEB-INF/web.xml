@@ -123,20 +123,4 @@
 		<servlet-name>AdminAddFriendsController</servlet-name>
 		<url-pattern>/admin/friends/add</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<servlet-name>AdminEditFriendsController</servlet-name>
-		<servlet-class>controller.AdminEditFriendsController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AdminEditFriendsController</servlet-name>
-		<url-pattern>/admin/friends/edit</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>AdminDelFriendsController</servlet-name>
-		<servlet-class>controller.AdminDelFriendsController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AdminDelFriendsController</servlet-name>
-		<url-pattern>/admin/friends/del</url-pattern>
-	</servlet-mapping>
 </web-app>

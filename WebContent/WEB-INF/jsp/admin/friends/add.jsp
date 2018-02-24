@@ -20,11 +20,7 @@
                             	String err = request.getParameter("err");
                             	if ("1".equals(err)){
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Thêm bạn bè bị lỗi</div>");
-                            	} else if ("2".equals(err)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Hãy nhập file!</div>");
-                            	} else if ("3".equals(err)){
-                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Hãy nhập file ảnh !</div>");
-                            	} 
+                            	}
                             	String name = request.getParameter("username");
                             	String preview = request.getParameter("preview");
                             	String detail = request.getParameter("detail");

@@ -19,7 +19,7 @@
 						</a>
                     </div>
                     <div class="card-add">
-                        <a href="<%=request.getContextPath() %>/admin/friends/add" class="dashboard-module">
+                        <a href="<%=request.getContextPath() %>/admin/cats/add" class="dashboard-module">
                         	<img src="<%=request.getContextPath() %>/template/admin/img/addFriends.png" alt="" />
 							<p>Thêm Bạn bè</p>
 						</a>
