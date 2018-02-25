@@ -13,6 +13,7 @@ import constant.Define;
 import model.bean.Category;
 import model.bean.Friend;
 import model.dao.CategoryDAO;
+import util.AuthUtil;
 
 public class AdminIndexCatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,6 +25,10 @@ public class AdminIndexCatController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+		
 		int sumCat = categoryDAO.countCat();
 		int sumPage = (int) Math.ceil((float) sumCat / Define.ROW_PAGINATION_CAT);
 		int currentPage = 1;

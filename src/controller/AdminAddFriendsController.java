@@ -16,41 +16,52 @@ import model.bean.Category;
 import model.bean.Friend;
 import model.dao.CategoryDAO;
 import model.dao.FriendDAO;
+import util.AuthUtil;
 
 @MultipartConfig
 public class AdminAddFriendsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CategoryDAO categoryDAO;
-	
-	private FriendDAO friendDAO;
-       
-    public AdminAddFriendsController() {
-        super();
-        categoryDAO = new CategoryDAO();
-        friendDAO = new FriendDAO();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private FriendDAO friendDAO;
+
+	public AdminAddFriendsController() {
+		super();
+		categoryDAO = new CategoryDAO();
+		friendDAO = new FriendDAO();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		ArrayList<Category> categories = categoryDAO.getItems();
-		request.setAttribute("categories",categories);
-		
+		request.setAttribute("categories", categories);
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/add.jsp");
 		rd.forward(request, response);
 		return;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter("name");
 		String preview = request.getParameter("preview");
 		String detail = request.getParameter("detail");
-		
+
 		if (name.isEmpty() || preview.isEmpty() || detail.isEmpty()) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/add.jsp?err=1");
 			rd.forward(request, response);
 			return;
 		}
-		
+
 		int catId = 0;
 		try {
 			catId = Integer.parseInt(request.getParameter("category"));
@@ -59,11 +70,11 @@ public class AdminAddFriendsController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/admin/friends/add.jsp?err=1");
 			return;
 		}
-		
+
 		// upload ảnh
 		final Part part = request.getPart("picture");
 		String fileName = getFileName(part);
-		
+
 		// upload anh
 		String filePath = "";
 		if (!"".equals(fileName)) {
@@ -96,7 +107,7 @@ public class AdminAddFriendsController extends HttpServlet {
 					return;
 				}
 				request.setAttribute("categories", categories);
-				
+
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/add.jsp?err=3");
 				rd.forward(request, response);
 				return;
@@ -108,14 +119,14 @@ public class AdminAddFriendsController extends HttpServlet {
 				return;
 			}
 			request.setAttribute("categories", categories);
-			
+
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/add.jsp?err=2");
 			rd.forward(request, response);
 			return;
 		}
-		
+
 		//
-		
+
 		Friend friend = new Friend(0, name, preview, detail, null, 0, fileName, new Category(catId, null));
 		if (friendDAO.addItem(friend) > 0) {
 			part.write(filePath);
@@ -125,17 +136,16 @@ public class AdminAddFriendsController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/admin/friends?err=1");
 			return;
 		}
-				
+
 	}
 
 	private String getFileName(final Part part) {
-	    final String partHeader = part.getHeader("content-disposition");
-	    for (String content : partHeader.split(";")) {
-	        if (content.trim().startsWith("filename")) {
-	            return content.substring(
-	                    content.indexOf('=') + 1).trim().replace("\"", "");
-	        }
-	    }
-	    return null;
+		final String partHeader = part.getHeader("content-disposition");
+		for (String content : partHeader.split(";")) {
+			if (content.trim().startsWith("filename")) {
+				return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+			}
+		}
+		return null;
 	}
 }

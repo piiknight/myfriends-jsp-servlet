@@ -10,17 +10,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.bean.Category;
 import model.dao.CategoryDAO;
+import util.AuthUtil;
 
 public class AdminDelCatController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CategoryDAO categoryDAO;
-	
-    public AdminDelCatController() {
-        super();
-        categoryDAO = new CategoryDAO();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AdminDelCatController() {
+		super();
+		categoryDAO = new CategoryDAO();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		int id = 0;
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -28,7 +34,7 @@ public class AdminDelCatController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/admin/cats?err=2");
 			return;
 		}
-		
+
 		Category category = categoryDAO.getItem(id);
 		if (category == null) {
 			response.sendRedirect(request.getContextPath() + "/admin/cats?err=2");
@@ -45,8 +51,9 @@ public class AdminDelCatController extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
 }

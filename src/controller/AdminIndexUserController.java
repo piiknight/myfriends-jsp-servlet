@@ -12,16 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import constant.Define;
 import model.bean.User;
 import model.dao.UserDAO;
+import util.AuthUtil;
 
 public class AdminIndexUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDAO userDAO;
-    public AdminIndexUserController() {
-        super();
-        userDAO = new UserDAO();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AdminIndexUserController() {
+		super();
+		userDAO = new UserDAO();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+		
 		int sumUser = userDAO.countUser();
 		int sumPage = (int) Math.ceil((float) sumUser / Define.ROW_PAGINATION_USER);
 		int currentPage = 1;
@@ -38,13 +45,14 @@ public class AdminIndexUserController extends HttpServlet {
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("sumPage", sumPage);
 		request.setAttribute("users", users);
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/users/index.jsp");
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
 }

@@ -48,6 +48,10 @@
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không thể xóa Admin.</div>");
                             	} else if ("3".equals(error)){
                             		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không tìm thấy trang.</div>");
+                            	} else if ("4".equals(error)){
+                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không cho phép sửa.</div>");
+                            	} else if ("5".equals(error)){
+                            		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không cho phép xóa.</div>");
                             	} 
                             	
                             %>
@@ -63,6 +67,7 @@
                                     <tbody>
                                     
                                     	<%
+                                    		User userInfo = (User) session.getAttribute("userLogin");
                                     		ArrayList<User> users = (ArrayList<User>) request.getAttribute("users");
                                     		if (users.size() > 0){
                                     			for(User user:users){
@@ -71,6 +76,9 @@
                                         	<td><%=user.getId() %></td>
                                         	<td><%=user.getUsername() %></td>
                                         	<td><%=user.getFullname() %></td>
+                                        	<%
+                                        		if ("admin".equals(userInfo.getUsername())) {
+                                        	%>
                                         	<td>
 												<a href="<%=request.getContextPath() %>/admin/users/edit?id=<%=user.getId() %>">
 							                        <i class="ti-pencil"></i>
@@ -81,6 +89,25 @@
 							                        <span>Xóa</span>
 							                    </a>
 											</td>
+											<%
+                                        		} else {
+                                        	%>
+                                        	<td>
+	                                        	<% 	
+	                                        		if (userInfo.getId() == user.getId()) {
+												%>
+												
+													<a href="<%=request.getContextPath() %>/admin/users/edit?id=<%=user.getId() %>">
+								                        <i class="ti-pencil"></i>
+								                        <span>Sửa</span>
+								                    </a>
+												<%
+													} 
+												%>
+											</td>
+											<%
+                                    			}
+											%>
                                         </tr>
                                         <%
                                     			}}

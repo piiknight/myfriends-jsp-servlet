@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.bean.User;
 import model.dao.UserDAO;
+import util.AuthUtil;
 import util.StringLibrary;
 
 public class AdminAddUserController extends HttpServlet {
@@ -23,6 +24,10 @@ public class AdminAddUserController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/users/add.jsp");
 		rd.forward(request, response);
 		return;
@@ -30,6 +35,10 @@ public class AdminAddUserController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		request.setCharacterEncoding("UTF-8");
 		String username = request.getParameter("username");
 		String password = StringLibrary.md5(request.getParameter("password"));

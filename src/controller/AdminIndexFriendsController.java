@@ -12,18 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import constant.Define;
 import model.bean.Friend;
 import model.dao.FriendDAO;
+import util.AuthUtil;
 
 public class AdminIndexFriendsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private FriendDAO friendDAO;
-       
-    public AdminIndexFriendsController() {
-        super();
-        friendDAO = new FriendDAO();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public AdminIndexFriendsController() {
+		super();
+		friendDAO = new FriendDAO();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		int sumFriend = friendDAO.countFriend();
 		int sumPage = (int) Math.ceil((float) sumFriend / Define.ROW_PAGINATION_FRIEND);
 		int currentPage = 1;
@@ -40,14 +45,15 @@ public class AdminIndexFriendsController extends HttpServlet {
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("sumPage", sumPage);
 		request.setAttribute("friends", friends);
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/friends/index.jsp");
 		rd.forward(request, response);
 		return;
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
 }

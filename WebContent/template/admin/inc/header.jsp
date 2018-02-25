@@ -1,3 +1,4 @@
+<%@page import="model.bean.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -50,33 +51,55 @@
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<%
+                   		User userLogin = (User) session.getAttribute("userLogin");
+                   		if (userLogin == null) {
+                   	%>
+                   		<li>
+							<a href="<%=request.getContextPath() %>/auth/login" title="">
 								<i class="ti-panel"></i>
-								<p>Stats</p>
+								<p>Chào bạn!</p>
+							</a>
+						</li>
+						<li>
+							<a href="<%=request.getContextPath() %>/auth/login">
+								<i class="ti-settings"></i>
+								<p>Log in</p>
+							</a>
+						</li>
+                   	<%
+                   		} else {
+                   	%>
+                   		<li>
+							<a href="<%=request.getContextPath() %>/admin/index" title="">
+								<i class="ti-panel"></i>
+								<p>Chào <%=userLogin.getFullname() %></p>
 							</a>
 						</li>
 						<li class="dropdown">
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<i class="ti-bell"></i>
-									<p class="notification">5</p>
-									<p>Notifications</p>
+									<p class="notification">3</p>
+									<p>Managements</p>
 									<b class="caret"></b>
 							  </a>
 							  <ul class="dropdown-menu">
-								<li><a href="#">Notification 1</a></li>
-								<li><a href="#">Notification 2</a></li>
-								<li><a href="#">Notification 3</a></li>
-								<li><a href="#">Notification 4</a></li>
-								<li><a href="#">Another notification</a></li>
+								<li><a href="<%=request.getContextPath() %>/admin/cats">Friend List</a></li>
+								<li><a href="<%=request.getContextPath() %>/admin/friends">Friends</a></li>
+								<li><a href="<%=request.getContextPath() %>/admin/users">Users</a></li>
 							  </ul>
 						</li>
 						<li>
-							<a href="#">
+							<a href="<%=request.getContextPath() %>/auth/logout">
 								<i class="ti-settings"></i>
-								<p>Settings</p>
+								<p>Log out</p>
 							</a>
 						</li>
+                   	<%
+                   		}
+                   	%>
+						
+						
 					</ul>
 	
 				</div>

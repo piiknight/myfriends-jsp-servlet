@@ -192,11 +192,11 @@ public class UserDAO {
 
 		return row;
 	}
-	
+
 	public int countUser() {
 		int result = 0;
 		String sql = "SELECT COUNT(*) AS sumUser FROM users";
-	
+
 		try {
 			conn = DatabaseConnection.getConnection();
 			st = conn.createStatement();
@@ -217,16 +217,16 @@ public class UserDAO {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		}
 		return result;
 	}
 
 	public ArrayList<User> getItemsPagination(int offset) {
-		ArrayList<User> users = new ArrayList<>();;
-		String sql = "SELECT id, username, fullname FROM users"
-				+ " ORDER BY id DESC LIMIT ?, ?";
+		ArrayList<User> users = new ArrayList<>();
+		;
+		String sql = "SELECT id, username, fullname FROM users" + " ORDER BY id DESC LIMIT ?, ?";
 		try {
 			conn = DatabaseConnection.getConnection();
 			pst = conn.prepareStatement(sql);
@@ -253,10 +253,42 @@ public class UserDAO {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		}
 		return users;
 	}
-}
 
+	public User checkLogin(String username, String password) {
+		String sql = "SELECT id, fullname FROM users WHERE username = ? AND password = ?";
+		User user = null;
+		try {
+			conn = DatabaseConnection.getConnection();
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, username);
+			pst.setString(2, password);
+			rs = pst.executeQuery();
+
+			if (rs.next()) {
+				int id = rs.getInt("id");
+				String fullname = rs.getString("fullname");
+				user = new User(id, username, fullname);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null && pst != null && rs != null) {
+				try {
+					rs.close();
+					pst.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return user;
+	}
+}

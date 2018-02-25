@@ -7,9 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.bean.User;
 import model.dao.UserDAO;
+import util.AuthUtil;
 import util.StringLibrary;
 
 public class AdminEditUserController extends HttpServlet {
@@ -23,6 +25,10 @@ public class AdminEditUserController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		int id = 0;
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -30,21 +36,32 @@ public class AdminEditUserController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/admin/users?error=1");
 			return;
 		}
-
-		User user = userDAO.getItem(id);
-		if (user == null) {
-			response.sendRedirect(request.getContextPath() + "/admin/users?error=1");
+		
+		HttpSession session = request.getSession();
+		User userLogin = (User) session.getAttribute("userLogin");
+		
+		if (("admin".equals(userDAO.getItem(userLogin.getId()).getUsername())) || (id == userLogin.getId())) {
+			User user = userDAO.getItem(id);
+			if (user == null) {
+				response.sendRedirect(request.getContextPath() + "/admin/users?error=1");
+				return;
+			}
+			request.setAttribute("user", user);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/users/edit.jsp");
+			rd.forward(request, response);
 			return;
+		} else {
+			response.sendRedirect(request.getContextPath() + "/admin/users?error=4");
 		}
-		request.setAttribute("user", user);
-
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/admin/users/edit.jsp");
-		rd.forward(request, response);
-		return;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		request.setCharacterEncoding("UTF-8");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");

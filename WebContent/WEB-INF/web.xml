@@ -139,4 +139,20 @@
 		<servlet-name>AdminDelFriendsController</servlet-name>
 		<url-pattern>/admin/friends/del</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>AuthLoginController</servlet-name>
+		<servlet-class>controller.AuthLoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthLoginController</servlet-name>
+		<url-pattern>/auth/login</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AuthLogoutController</servlet-name>
+		<servlet-class>controller.AuthLogoutController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthLogoutController</servlet-name>
+		<url-pattern>/auth/logout</url-pattern>
+	</servlet-mapping>
 </web-app>

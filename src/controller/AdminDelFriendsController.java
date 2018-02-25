@@ -10,17 +10,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.bean.Friend;
 import model.dao.FriendDAO;
+import util.AuthUtil;
 
 public class AdminDelFriendsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private FriendDAO friendDAO;
-       
-    public AdminDelFriendsController() {
-        super();
-        friendDAO = new FriendDAO();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AdminDelFriendsController() {
+		super();
+		friendDAO = new FriendDAO();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!AuthUtil.CheckLogin(request, response)) {
+			return;
+		}
+
 		int id = 0;
 		try {
 			id = Integer.parseInt(request.getParameter("id"));
@@ -34,7 +40,7 @@ public class AdminDelFriendsController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/admin/friends?error=1");
 			return;
 		}
-		
+
 		if (friendDAO.delItem(friend) > 0) {
 			// Xóa thành công
 			response.sendRedirect(request.getContextPath() + "/admin/friends?msg=2");
@@ -46,8 +52,9 @@ public class AdminDelFriendsController extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
 }
