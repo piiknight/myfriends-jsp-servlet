@@ -10,10 +10,11 @@
 			 <div class="col-md-8 content-main">
 			 	<% 
 			 		ArrayList<Friend> friends = (ArrayList<Friend>) request.getAttribute("friends");
+			 		Category objCat = (Category) request.getAttribute("objCat");
 			 		if (friends.size() > 0){
-			 		request.setAttribute("id", friends.get(0).getCategory().getFl_id());	
+			 		request.setAttribute("id", objCat.getFl_id());
 				 %>				 
-				 <h1 class="title"><span>Những người bạn >> </span><%=friends.get(0).getCategory().getFl_name() %></h1>
+				 <h1 class="title"><span>Những người bạn >> </span><%=objCat.getFl_name() %></h1>
 				 <%
 				 	for(Friend friend:friends){
 				 %>
@@ -22,15 +23,56 @@
 							 <h3><a href="<%=request.getContextPath() %>/detail?fid=<%=friend.getFid() %>"><%=friend.getFname() %></a></h3>
 							 <h4>Đăng ngày: <%=StringUtil.formatTimestamp(friend.getDate_create()) %> - Lượt xem: <%=friend.getCount_number() %></h4>
 							 <p><%=friend.getPreview() %></p>
-							 <img src="<%=request.getContextPath() %>/images/<%=friend.getPicture() %>" alt=""/>
-							 <a class="bttn" href="<%=request.getContextPath() %>/detail?fid=<%=friend.getFid() %>">Chi tiết bạn tôi</a>
+							 <img src="<%=request.getContextPath() %>/files/<%=friend.getPicture() %>" alt=""/>
+							 <a class="bttn" href="<%=request.getContextPath() %>/<%=StringLibrary.createSlug(friend.getCategory().getFl_name()) %>/<%=StringLibrary.createSlug(friend.getFname()) %>-<%=friend.getFid() %>.html">Chi tiết bạn tôi</a>
 					 </div>
 				 </div>
 				 
 				<%
-			 		}}
+			 		}} else {
 				%>
-				 </div>			 
+				<h3>Không có dữ liệu</h3>
+				<%
+			 		}
+				%>
+				
+			    <div class="my_pagination pagination">
+				<span>PAGE</span>
+				<%
+					int sumPage = (int) request.getAttribute("sumPage");
+					int currentPage = (int) request.getAttribute("currentPage");
+				%>
+			 		<a id="backlistpage" href="javascript:;">&laquo;</a>
+			 		<%
+			 			if (currentPage != 1) {
+			 		%>
+			 		<a href="<%=request.getContextPath() %>/<%=StringLibrary.createSlug(objCat.getFl_name()) %>-<%=objCat.getFl_id() %>/page/<%=currentPage - 1 %>">&lsaquo;</a>
+			 		<%
+			 			}
+			 		%>
+					<%
+						
+						String active = "";
+						for (int i = 1; i <= sumPage; i++){
+							if (i == currentPage) {
+								active = "class='active'";
+							} else {
+								active = "";
+							}
+					%>
+						<a id="idpage<%=i %>" <%=active %> href="<%=request.getContextPath() %>/<%=StringLibrary.createSlug(objCat.getFl_name()) %>-<%=objCat.getFl_id() %>/page/<%=i %>"><%=i %></a>
+					<%
+						}
+					%>
+					<%
+			 			if (currentPage != sumPage) {
+			 		%>
+			 		<a href="<%=request.getContextPath() %>/<%=StringLibrary.createSlug(objCat.getFl_name()) %>-<%=objCat.getFl_id() %>/page/<%=currentPage + 1 %>">&rsaquo;</a>
+			 		<%
+			 			}
+			 		%>
+					<a id="nextlistpage" href="javascript:;">&raquo;</a>
+				</div>
 			 </div>
 			 
 			 <%@include file="/template/public/inc/menu-bar.jsp" %>

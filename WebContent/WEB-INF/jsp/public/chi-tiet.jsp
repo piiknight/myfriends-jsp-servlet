@@ -23,28 +23,36 @@
 						 <h3><%=friend.getFname() %></h3>
 						 <div class="detail_text">
 							 <span><%=friend.getPreview() %></span>
-							 <img class="single-pic" src="<%=request.getContextPath() %>/images/<%=friend.getPicture()%>" alt="">
+							 <img class="single-pic" src="<%=request.getContextPath() %>/files/<%=friend.getPicture()%>" alt="">
 							 <p><%=friend.getDetail() %></p>
 						 </div>
 						 <div class="comments">
-							 <h3>Bạn thân khác của tôi</h3>
+							<h3>Bạn thân khác của tôi</h3>
 							 
-							 <%
-							 	for(Friend f:anotherFriends){
-							 %>
-							 <div class="comment-grid">
-								 <img src="<%=request.getContextPath() %>/images/<%=f.getPicture()%>" alt="">
-								 <div class="comment-info">
-								 <h4><a href="<%=request.getContextPath() %>/detail?fid=<%=f.getFid() %>"><%=f.getFname() %></a></h4>
-								 <p><%=f.getPreview() %></p>
-								 </div>
-								 <div class="clearfix"></div>
-							 </div>
-							 <%
-							 	}
-							 %>
-
+							<div id="items-involve">
+							 
+							</div>
 						</div>
+						<div class="clearfix"></div>
+						<div class="my_pagination pagination">
+							<a href="javascript:;" title="">PAGE</a>
+							<%
+								int sumPage = (int) request.getAttribute("sumPage");
+							%>
+						 	<a id="backlistpage" href="javascript:;">&laquo;</a>
+						 	<a id="previouspageinvovle" href="javascript:;">&lsaquo;</a>
+						 	<form class="form_involve">
+							<%
+								for (int k = 1; k <= sumPage; k++) {
+							%>
+								<a id="idpage<%=k %>" onclick="involveFunction(<%=k %>, <%=friend.getFid() %>);" href="javascript:;"><%=k %></a>	
+							<%
+								}
+							%>
+							</form>
+						 	<a id="nextpageinvovle" href="javascript:;">&rsaquo;</a>
+							<a id="nextlistpage" href="javascript:;">&raquo;</a>
+							</div>
 					  </div>
 					 
 				 </div>			 			 

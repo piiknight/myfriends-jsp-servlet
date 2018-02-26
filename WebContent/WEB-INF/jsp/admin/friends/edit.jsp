@@ -48,7 +48,7 @@
 	                            	<input type="file" name="picture" value="" class="btn btn-primary">
 	                            	<br />
 	                            	<label>Preview: </label>
-	                            	<textarea name="preview" rows="7" cols="90" class="my-input"><%=friend.getPreview() %></textarea>
+	                            	<textarea name="preview" rows="7" cols="90" class="my-input-preview"><%=friend.getPreview() %></textarea>
 	                            	<label>Detail: </label>
 	                            	<textarea  name="detail" rows="7" cols="90" class="my-input" id="editor"><%=friend.getDetail() %></textarea>
 	                            	<br />

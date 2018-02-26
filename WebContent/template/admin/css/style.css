@@ -65,6 +65,11 @@ body {
     height: 35px;
     width: 40%;
 }
+.my-input-preview {
+	border-radius: 5px;
+    display: block;
+    margin-bottom: 15px;
+}
 .my-form .error {
 	color: red;
 }

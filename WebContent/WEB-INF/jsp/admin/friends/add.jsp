@@ -64,7 +64,7 @@
 	                            	<input type="file" name="picture" value="" class="btn btn-primary">
 	                            	<br />
 	                            	<label>Preview: </label>
-	                            	<textarea name="preview" rows="7" cols="90" value="<%=preview %>" class="my-input"><%=preview %></textarea>
+	                            	<textarea name="preview" rows="7" cols="90" value="<%=preview %>" class="my-input-preview"><%=preview %></textarea>
 	                            	<label>Detail: </label>
 	                            	<textarea  name="detail" rows="7" cols="90" value="<%=detail %>" class="my-input" id="editor"><%=detail %></textarea>
 	                            	<br />

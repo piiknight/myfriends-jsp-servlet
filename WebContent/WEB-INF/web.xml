@@ -4,6 +4,16 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 	<display-name>myfriends</display-name>
+	<filter>
+	    <filter-name>UrlRewriteFilter</filter-name>
+	    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>UrlRewriteFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	    <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
 	<servlet>
 		<servlet-name>ConnectorServlet</servlet-name>
 		<servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>
@@ -154,5 +164,37 @@
 	<servlet-mapping>
 		<servlet-name>AuthLogoutController</servlet-name>
 		<url-pattern>/auth/logout</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PublicIndexController</servlet-name>
+		<servlet-class>controller.PublicIndexController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PublicIndexController</servlet-name>
+		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PublicIndexCatController</servlet-name>
+		<servlet-class>controller.PublicIndexCatController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PublicIndexCatController</servlet-name>
+		<url-pattern>/category</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PublicIndexDetailController</servlet-name>
+		<servlet-class>controller.PublicIndexDetailController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PublicIndexDetailController</servlet-name>
+		<url-pattern>/detail</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PublicContactController</servlet-name>
+		<servlet-class>controller.PublicContactController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PublicContactController</servlet-name>
+		<url-pattern>/contact</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -5,26 +5,38 @@
 	 <div class="container">
 		 <div class="contact-head">
 			 <h3>Liên hệ</h3>
-			 <%
-			 	if (request.getParameter("success") != null){
-			 	if (Integer.parseInt(request.getParameter("success")) == 1){
-			 %>
-			 <p>Bạn đã nhập thành công!</p>
-			 <%
-			 	} else {
-			 %>
-			 <p>Nhập vào thất bại!</p>
-			 <%
-			 	}}
-			 %>
-			  <form id="form" action="<%=request.getContextPath() %>/contact" method="post">
+			  <%
+                 	String msg = request.getParameter("msg");
+                 	if ("1".equals(msg)){
+                 		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Gởi đi thất bại.</div>");
+                 	} else if ("2".equals(msg)){
+                 		out.print("<div class='alert alert-success'><strong>Thành công!</strong> Gởi đi hoàn tất.</div>");
+                 	}
+                 	String name = request.getParameter("name");
+                 	if (request.getParameter("name") == null) {
+                 		name = "";
+                 	}
+                 	String email = request.getParameter("email");
+                 	if (request.getParameter("email") == null) {
+                 		email = "";
+                 	}
+                 	String phone = request.getParameter("phone");
+                 	if (request.getParameter("phone") == null) {
+                 		phone = "";
+                 	}
+                 	String message = request.getParameter("message");
+                 	if (request.getParameter("message") == null) {
+                 		message = "";
+                 	}
+                 %>
+			  <form id="form" action="" method="post">
 				  <div class="col-md-6 contact-left">
-						<input type="text" name="name" placeholder="Name" >
-						<input type="text" name="email" placeholder="E-mail" >
-						<input type="text" name="phone" placeholder="Phone" >
+						<input type="text" name="name" value="<%=name %>" placeholder="Name" >
+						<input type="text" name="email" value="<%=email %>" placeholder="E-mail" >
+						<input type="text" name="phone" value="<%=phone %>" placeholder="Phone" >
 				 </div>
 				 <div class="col-md-6 contact-right">
-						 <textarea name="message" placeholder="Message"></textarea>
+						 <textarea name="message" placeholder="Message"><%=message %></textarea>
 						 <input type="submit" value="SEND">
 				 </div>
 				 <div class="clearfix"></div>

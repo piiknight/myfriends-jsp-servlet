@@ -5,8 +5,8 @@
 <head>
 
 	<title>TRUNG TÂM ĐÀO TẠO LẬP TRÌNH VINAENTER</title>
-	<link href="<%=request.getContextPath() %>/css/bootstrap.css" rel='stylesheet' type='text/css' />
-	<link href="<%=request.getContextPath() %>/css/style.css" rel='stylesheet' type='text/css' />
+	<link href="<%=request.getContextPath() %>/template/public/css/bootstrap.css" rel='stylesheet' type='text/css' />
+	<link href="<%=request.getContextPath() %>/template/public/css/style.css" rel='stylesheet' type='text/css' />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="vinaneter, php, java, android, ios, laravel, codeigniter" />
@@ -18,10 +18,10 @@
 		  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<!--end slider -->
 		<!--script-->
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/move-top.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/easing.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.min.js" ></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery.validate.min.js" ></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/template/public/js/move-top.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/template/public/js/easing.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/template/public/js/jquery.min.js" ></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/template/public/js/jquery.validate.min.js" ></script>
 <!--/script-->
 <script type="text/javascript">
 			jQuery(document).ready(function($) {
@@ -40,13 +40,13 @@
 	 <div class="header">  
 		  <div class="container">
 			  <div class="logo">
-					<a href="/"> <img src="<%=request.getContextPath() %>/images/logo.png" title="soup" /></a>
+					<a href="<%=request.getContextPath() %>/nhung-nguoi-ban.html"> <img src="<%=request.getContextPath() %>/template/public/images/logo.png" title="soup" /></a>
 			 </div>
 			 <!---start-top-nav---->
 			 <div class="top-menu">
 				  <span class="menu"> </span> 
 				   <ul>
-						<li class="active"><a href="<%=request.getContextPath() %>/index">Trang chủ</a></li>						
+						<li class="active"><a href="<%=request.getContextPath() %>/nhung-nguoi-ban.html">Trang chủ</a></li>						
 						<div class="clearfix"> </div>
 				 </ul>
 			 </div>
@@ -66,8 +66,8 @@
 		 </div>
 		 <div class="banner-links">
 			 <ul>
-				 <li id="home" class="active"><a href="<%=request.getContextPath() %>/index">Những người bạn</a></li>
-				 <li id="contact"><a href="<%=request.getContextPath() %>/contact">Liên hệ</a></li>
+				 <li id="home" class="active"><a href="<%=request.getContextPath() %>/nhung-nguoi-ban.html">Những người bạn</a></li>
+				 <li id="contact"><a href="<%=request.getContextPath() %>/lien-he.html">Liên hệ</a></li>
 				 <div class="clearfix"></div>
 			 </ul>
 		 </div>

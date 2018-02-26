@@ -355,7 +355,7 @@ public class FriendDAO {
 		}
 		return result;
 	}
-
+	
 	public ArrayList<Friend> getItemsPagination(int offset) {
 		ArrayList<Friend> friends = new ArrayList<>();;
 		String sql = "SELECT fid, fname, preview, detail, date_create, count_number, picture, friend_list.fl_id AS cat_id, fl_name FROM "
@@ -399,6 +399,128 @@ public class FriendDAO {
 		}
 		return friends;
 	}
+
+	public ArrayList<Friend> getItemsPaginationByFlID(int id, int offset) {
+		ArrayList<Friend> friends = new ArrayList<>();;
+		String sql = "SELECT fid, fname, preview, detail, date_create, count_number, picture, friend_list.fl_id AS cat_id, fl_name FROM "
+				+ "friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id WHERE friends.fl_id = ?"
+				+ " ORDER BY fid DESC LIMIT ?, ?";
+		try {
+			conn = DatabaseConnection.getConnection();
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, id);
+			pst.setInt(2, offset);
+			pst.setInt(3, Define.ROW_PAGINATION_FRIEND);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				int fid = rs.getInt("fid");
+				String fname = rs.getString("fname");
+				String preview = rs.getString("preview");
+				String detail = rs.getString("detail");
+				String picture = rs.getString("picture");
+				Timestamp date_create = rs.getTimestamp("date_create");
+				int count_number = rs.getInt("count_number");
+				String fl_name = rs.getString("fl_name");
+				int fl_id = rs.getInt("cat_id");
+				Category category = new Category(fl_id, fl_name);
+				Friend friend = new Friend(fid, fname, preview, detail, date_create, count_number, picture, category);
+				friends.add(friend);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null && pst != null && rs != null) {
+				try {
+					rs.close();
+					pst.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return friends;
+	}
 	
+	public int countFriendByFlID(int id) {
+		int result = 0;
+		String sql = "SELECT COUNT(*) AS sumFriend FROM "
+				+ "friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id WHERE friends.fl_id = ?";
+	
+		try {
+			conn = DatabaseConnection.getConnection();
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("sumFriend");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null && pst != null && rs != null) {
+				try {
+					rs.close();
+					pst.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return result;
+	}
+	
+	public ArrayList<Friend> getItemsPaginationInvolve(int id_f, int id_fl , int offset) {
+		ArrayList<Friend> friends = new ArrayList<>();;
+		String sql = "SELECT fid, fname, preview, detail, date_create, count_number, picture, friend_list.fl_id AS cat_id, fl_name FROM "
+				+ " friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id WHERE friends.fl_id = ? AND fid != ?"
+				+ " ORDER BY fid DESC LIMIT ?, ?";
+		try {
+			conn = DatabaseConnection.getConnection();
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, id_fl);
+			pst.setInt(2, id_f);
+			pst.setInt(3, offset);
+			pst.setInt(4, Define.ROW_PAGINATION_FRIEND_INVOLVE);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				int fid = rs.getInt("fid");
+				String fname = rs.getString("fname");
+				String preview = rs.getString("preview");
+				String detail = rs.getString("detail");
+				String picture = rs.getString("picture");
+				Timestamp date_create = rs.getTimestamp("date_create");
+				int count_number = rs.getInt("count_number");
+				String fl_name = rs.getString("fl_name");
+				int fl_id = rs.getInt("cat_id");
+				Category category = new Category(fl_id, fl_name);
+				Friend friend = new Friend(fid, fname, preview, detail, date_create, count_number, picture, category);
+				friends.add(friend);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null && pst != null && rs != null) {
+				try {
+					rs.close();
+					pst.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return friends;
+	}
 }
 

@@ -1430,3 +1430,33 @@ padding: 0.3em 1em;
 font-size: 0.8em;
 }
 }
+.my_pagination {
+    font-family: normal;
+    border: 1px solid;
+    float: right;
+}
+.my_pagination span {
+    float: left;
+    padding: 5px 16px;
+    margin-top: 5px;
+}
+.my_pagination a {
+    color: black;
+    padding: 8px 16px;
+    float: left;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+.form_involve {
+    display: inline;
+}
+.my_pagination a.active {
+    background-color: #EB5E28;
+    color: white;
+}
+
+.my_pagination a:hover:not(.active) {background-color: #ddd;}
+#form .error {
+	padding: 0px 0px 25px 0px;
+    color: red;
+}
