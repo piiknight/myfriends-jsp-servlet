@@ -7,8 +7,8 @@
 <div class="col-md-4 content-main-right">
 	 <div class="search">
 			<h3>TÌM BẠN TÔI</h3>
-			<form>
-				<input type="text" value="" onfocus="this.value=''" onblur="this.value=''">
+			<form action="<%=request.getContextPath() %>/danh-sach-tim-kiem.html" method="get">
+				<input type="text" value="Nhập tên bạn bè..." onfocus="this.value=''" name="name">
 				<input type="submit" value="">
 			</form>
 	 </div>

@@ -32,6 +32,10 @@ public class PublicIndexDetailController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/index?err=1");
 			return;
 		}
+		
+		// Tăng lượt xem
+		friendDAO.increaseView(fid);
+				
 		Friend friend = friendDAO.getItemByID(fid);
 		if (friend == null) {
 			response.sendRedirect(request.getContextPath() + "/index?err=1");

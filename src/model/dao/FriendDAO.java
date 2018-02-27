@@ -522,5 +522,109 @@ public class FriendDAO {
 		}
 		return friends;
 	}
+	
+	public int countFriendSearch(String name) {
+		int result = 0;
+		String sql = "SELECT COUNT(*) AS sumFriend FROM "
+				+ "friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id WHERE friends.fname LIKE ?";
+		try {
+			conn = DatabaseConnection.getConnection();
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, "%" + name + "%");
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("sumFriend");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null && pst != null && rs != null) {
+				try {
+					rs.close();
+					pst.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return result;
+	}
+	
+	public ArrayList<Friend> getItemsPaginationSearch(String name, int offset) {
+		ArrayList<Friend> friends = new ArrayList<>();;
+		String sql = "SELECT fid, fname, preview, detail, date_create, count_number, picture, friend_list.fl_id AS cat_id, fl_name FROM "
+				+ " friends INNER JOIN friend_list ON friends.fl_id = friend_list.fl_id "
+				+ " WHERE friends.fname LIKE ?"
+				+ " ORDER BY fid DESC LIMIT ?, ?";
+		try {
+			conn = DatabaseConnection.getConnection();
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, "%" + name + "%");
+			pst.setInt(2, offset);
+			pst.setInt(3, Define.ROW_PAGINATION_FRIEND);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				int fid = rs.getInt("fid");
+				String fname = rs.getString("fname");
+				String preview = rs.getString("preview");
+				String detail = rs.getString("detail");
+				String picture = rs.getString("picture");
+				Timestamp date_create = rs.getTimestamp("date_create");
+				int count_number = rs.getInt("count_number");
+				String fl_name = rs.getString("fl_name");
+				int fl_id = rs.getInt("cat_id");
+				Category category = new Category(fl_id, fl_name);
+				Friend friend = new Friend(fid, fname, preview, detail, date_create, count_number, picture, category);
+				friends.add(friend);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null && pst != null && rs != null) {
+				try {
+					rs.close();
+					pst.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return friends;
+	}
+
+	public void increaseView(int fid) {
+		String sql = "UPDATE friends SET count_number = count_number + 1 WHERE fid = ?";
+		
+		try {
+			conn = DatabaseConnection.getConnection();
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, fid);
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		finally {
+			if (conn != null && pst != null) {
+				try {
+					pst.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
 }
 

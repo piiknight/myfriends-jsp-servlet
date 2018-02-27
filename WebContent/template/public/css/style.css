@@ -251,6 +251,7 @@ font-weight:400;
 font-size:1em;
 background:#F4725C;
 font-family: 'Source Sans Pro', sans-serif;
+font-style: italic;
 }
 .search input[type="submit"] {
 background: url(../images/splits.png) no-repeat -202px -6px;

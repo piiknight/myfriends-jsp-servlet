@@ -7,18 +7,20 @@
 <div class="content">
 	 <div class="container">
 		 <div class="content-grids">
-			 <div class="col-md-8 content-main">				 
-				 <h1 class="title">Những người bạn</h1>
-				 <%
+			 <div class="col-md-8 content-main">
+			 	<%
                  	String err = request.getParameter("err");
                  	if ("1".equals(err)){
                  		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không tìm thấy ID.</div>");
                  	} else if ("2".equals(err)){
                  		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không tìm thấy trang.</div>");
-                 	} else if ("3".equals(err)){
-                 		out.print("<div class='alert alert-danger'><strong>Thất bại!</strong> Không tìm thấy kết quả tìm kiếm.</div>");
                  	}
-                 %>
+                 	String name = request.getParameter("name");
+                 	if (request.getParameter("name") == null){
+                 		name = "";
+                 	}
+                 %>			 
+				 <h1 class="title">Danh sách tìm kiếm : <span><%=name %></span></h1>
 				 <%
 				 	ArrayList<Friend> friends = (ArrayList<Friend>) request.getAttribute("friends");
 				 	for(Friend friend:friends){
@@ -45,7 +47,7 @@
 			 		<%
 			 			if (currentPage != 1) {
 			 		%>
-			 		<a href="<%=request.getContextPath() %>/nhung-nguoi-ban.html?page=<%=currentPage - 1 %>">&lsaquo;</a>
+			 		<a href="<%=request.getContextPath() %>/danh-sach-tim-kiem.html-<%=name %>/page/<%=currentPage - 1 %>">&lsaquo;</a>
 			 		<%
 			 			}
 			 		%>
@@ -59,14 +61,14 @@
 								active = "";
 							}
 					%>
-						<a id="idpage<%=i %>" <%=active %> href="<%=request.getContextPath() %>/nhung-nguoi-ban.html?page=<%=i %>"><%=i %></a>
+						<a id="idpage<%=i %>" <%=active %> href="<%=request.getContextPath() %>/danh-sach-tim-kiem.html?name=<%=name %>&page=<%=i %>"><%=i %></a>
 					<%
 						}
 					%>
 					<%
 			 			if (currentPage != sumPage) {
 			 		%>
-			 		<a href="<%=request.getContextPath() %>/nhung-nguoi-ban.html?page=<%=currentPage + 1 %>">&rsaquo;</a>
+			 		<a href="<%=request.getContextPath() %>/danh-sach-tim-kiem.html-<%=name %>/page/<%=currentPage + 1 %>">&rsaquo;</a>
 			 		<%
 			 			}
 			 		%>

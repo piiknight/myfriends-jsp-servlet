@@ -197,4 +197,12 @@
 		<servlet-name>PublicContactController</servlet-name>
 		<url-pattern>/contact</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>PublicPublicSearchController</servlet-name>
+		<servlet-class>controller.PublicPublicSearchController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PublicPublicSearchController</servlet-name>
+		<url-pattern>/search</url-pattern>
+	</servlet-mapping>
 </web-app>
